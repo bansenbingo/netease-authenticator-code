@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { spawn, execFile } from "node:child_process";
+import { mkdtemp, rm } from "node:fs/promises";
 import { createServer } from "node:net";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
@@ -9,10 +12,10 @@ import { generateCode } from "../src/codegen.js";
 // Overridable so the same checks can run against a downloaded release asset:
 //   CODE163_EXE=C:\path\to\163Code-1.0.0.exe npm run test:portable
 const exe = process.env.CODE163_EXE
-  ? fileURLToPath(process.env.CODE163_EXE)
+  ? resolve(process.env.CODE163_EXE)
   : fileURLToPath(new URL("../release/163Code-1.0.0.exe", import.meta.url));
 const screenshotPath = process.env.CODE163_SCREENSHOT
-  ? fileURLToPath(process.env.CODE163_SCREENSHOT)
+  ? resolve(process.env.CODE163_SCREENSHOT)
   : fileURLToPath(new URL("../checks/portable-window.png", import.meta.url));
 
 // A fixed port breaks as soon as something else holds it, so ask the OS for a
@@ -37,7 +40,12 @@ const debugPort = await freePort();
 const childEnv = { ...process.env };
 delete childEnv.ELECTRON_RUN_AS_NODE;
 
-const app = spawn(exe, [`--remote-debugging-port=${debugPort}`], {
+// The real app keeps its saved keys in the user profile, so a second run on a
+// machine that already used it would start with rows in the list. Give this run
+// a throwaway profile so the checks below start from the same state every time.
+const profileDir = await mkdtemp(join(tmpdir(), "163code-profile-"));
+
+const app = spawn(exe, [`--user-data-dir=${profileDir}`, `--remote-debugging-port=${debugPort}`], {
   stdio: "ignore",
   windowsHide: false,
   env: childEnv,
@@ -172,4 +180,5 @@ try {
       execFile("taskkill", ["/PID", String(app.pid), "/T", "/F"], () => resolve());
     });
   }
+  await rm(profileDir, { recursive: true, force: true }).catch(() => {});
 }
