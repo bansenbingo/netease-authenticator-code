@@ -1,0 +1,51 @@
+{
+  "name": "netease-authenticator-code-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline desktop window for the six-digit code generator",
+  "author": "Craft Anything",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable --x64",
+    "dist:local": "electron-builder --win portable --x64 --config.electronDist=node_modules/electron/dist"
+  },
+  "devDependencies": {
+    "electron": "45.3.2",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "net.battla.code163",
+    "productName": "网易将军令验证码生成器",
+    "directories": {
+      "output": "../release"
+    },
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../dist",
+        "to": "site"
+      }
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "icon.ico",
+      "artifactName": "163Code-${version}.exe"
+    },
+    "portable": {
+      "requestExecutionLevel": "user"
+    }
+  }
+}

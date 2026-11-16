@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>网易将军令验证码在线获取</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%234caf50'/%3E%3Cpath d='M9 16h14M16 9v14' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>网易将军令验证码在线获取</h1>
+
+    <form id="code-form" class="card">
+        <label for="secret">密钥:</label>
+        <input type="text" name="secret" id="secret" required list="recent-secrets" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="在此输入 例如：8810552096-5faf56ca673d910187068f1373e679c0" value="">
+        <datalist id="recent-secrets"></datalist>
+        <label for="note" class="note-label">备注（可选）:</label>
+        <input type="text" name="note" id="note" maxlength="24" autocomplete="off" spellcheck="false" placeholder="例如：欧服大号">
+        <p class="error" id="error" role="alert" hidden></p>
+        <input type="submit" value="添加并显示验证码">
+    </form>
+
+    <section class="card" id="current-card" hidden>
+        <div class="current-head">
+            <span class="current-note" id="current-note"></span>
+            <span class="current-secret" id="current-secret"></span>
+        </div>
+        <div class="result">
+            <label for="code">验证码:</label>
+            <input type="text" name="code" id="code" value="" readonly>
+            <p class="visually-hidden" id="code-status" role="status"></p>
+            <div class="window" id="window">
+                <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+                <p class="countdown" id="countdown">本验证码 30 秒后自动更新</p>
+            </div>
+        </div>
+        <input type="button" class="copy-button" value="复制验证码">
+    </section>
+
+    <section class="card" id="saved-card" hidden>
+        <h2 class="saved-heading">已保存的密钥 <span class="saved-meta" id="saved-meta"></span></h2>
+        <ul class="saved-list" id="saved-list"></ul>
+    </section>
+
+    <p class="hint" id="hint" aria-live="polite"></p>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,471 @@
+:root {
+  color-scheme: light;
+
+  --font-body: Arial, sans-serif;
+
+  --color-page: #f4f4f4;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f9f9f9;
+  --color-text: #000000;
+  --color-muted: #666666;
+  --color-border: #cccccc;
+  --color-success: #4caf50;
+  --color-success-hover: #45a049;
+  --color-action: #007bff;
+  --color-action-hover: #0056b3;
+  --color-on-accent: #ffffff;
+  --color-danger: #b00020;
+  --color-track: #e6e6e6;
+
+  --radius-card: 5px;
+  --radius-control: 4px;
+  --shadow-card: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  --page-padding: 20px;
+  --card-padding: 20px;
+  --card-width: 400px;
+  --field-padding: 10px;
+  --label-gap: 10px;
+  --result-gap: 20px;
+  --result-padding: 10px;
+  --result-label-gap: 5px;
+  --button-gap: 10px;
+  --button-padding-y: 10px;
+  --button-padding-x: 20px;
+  --copy-padding-y: 8px;
+  --copy-padding-x: 12px;
+  --heading-size: 32px;
+  --heading-gap: 21.44px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-page);
+  color: var(--color-text);
+  margin: 0;
+  padding: var(--page-padding);
+}
+
+h1 {
+  text-align: center;
+  font-size: var(--heading-size);
+  font-weight: 700;
+  margin: var(--heading-gap) 0;
+}
+
+form,
+.card {
+  background-color: var(--color-surface);
+  padding: var(--card-padding);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  max-width: var(--card-width);
+  margin: 0 auto;
+}
+
+.card + .card {
+  margin-top: 14px;
+}
+
+/* The note field is not the main event; keep it visibly secondary. */
+.note-label {
+  margin-top: 14px;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--label-gap);
+  font-weight: 700;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: var(--field-padding);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+/* The key is 42 characters: one size down lets the whole thing show at once. */
+#secret {
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+
+input[type="text"]:read-only {
+  cursor: default;
+}
+
+input[type="submit"] {
+  background-color: var(--color-success);
+  color: var(--color-on-accent);
+  padding: var(--button-padding-y) var(--button-padding-x);
+  border: none;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  margin-top: var(--button-gap);
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+input[type="submit"]:hover {
+  background-color: var(--color-success-hover);
+}
+
+.result {
+  margin-top: var(--result-gap);
+  padding: var(--result-padding);
+  background-color: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+}
+
+.result label {
+  margin-bottom: var(--result-label-gap);
+  font-weight: 400;
+}
+
+.result input[type="text"] {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-align: center;
+  color: #1b5e20;
+}
+
+/* The service refused the key: keep the box empty and print the message
+   underneath, where it can wrap instead of being cut off inside an input. */
+.result input[type="text"].invalid {
+  border: 1px dashed var(--color-danger);
+}
+
+.error {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-danger);
+  letter-spacing: 0;
+  word-break: break-all;
+}
+
+/* A new 30-second window started. */
+.result input[type="text"].fresh {
+  animation: code-fresh 0.7s ease-out;
+}
+
+@keyframes code-fresh {
+  0% {
+    background-color: #dff3e0;
+  }
+  100% {
+    background-color: var(--color-surface);
+  }
+}
+
+.window {
+  margin-top: 8px;
+}
+
+.progress {
+  height: 4px;
+  background-color: var(--color-track);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-success);
+  transition: width 0.2s linear;
+}
+
+.countdown {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--color-muted);
+  text-align: right;
+}
+
+.copy-button {
+  display: block;
+  background-color: var(--color-action);
+  color: var(--color-on-accent);
+  border: none;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  padding: var(--copy-padding-y) var(--copy-padding-x);
+  margin-top: var(--button-gap);
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.copy-button:hover {
+  background-color: var(--color-action-hover);
+}
+
+/* ---- current key card ---- */
+
+.current-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.current-note {
+  font-size: 14px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.current-note.placeholder {
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.current-secret {
+  margin-left: auto;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 12px;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+#current-card .result {
+  margin-top: 0;
+}
+
+/* ---- saved keys ---- */
+
+.saved-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 15px;
+}
+
+.saved-meta {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.saved-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+}
+
+.saved-row:hover {
+  background-color: var(--color-surface);
+}
+
+.saved-row.active {
+  border-color: var(--color-success);
+  box-shadow: inset 3px 0 0 var(--color-success);
+}
+
+.saved-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.saved-note,
+.saved-secret {
+  margin: 0;
+}
+
+.saved-note {
+  font-size: 14px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.saved-note.placeholder {
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.saved-secret {
+  margin-top: 2px;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 12px;
+  color: var(--color-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.saved-side {
+  text-align: right;
+}
+
+.saved-code {
+  display: block;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #1b5e20;
+}
+
+.saved-code.fresh {
+  animation: code-fresh-row 0.7s ease-out;
+}
+
+@keyframes code-fresh-row {
+  0% {
+    background-color: #dff3e0;
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+.saved-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.mini {
+  padding: 3px 8px;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.mini:hover {
+  border-color: var(--color-muted);
+}
+
+.mini.copy {
+  color: #0b57d0;
+  border-color: var(--color-action);
+}
+
+.mini.copy.ok {
+  background-color: #e8f0fe;
+}
+
+.mini.danger {
+  color: var(--color-danger);
+  border-color: #e0b4bc;
+}
+
+.saved-note-input {
+  padding: 5px 6px;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid var(--color-action);
+  border-radius: 3px;
+}
+
+.hint {
+  max-width: var(--card-width);
+  margin: 12px auto 0;
+  padding: 0 4px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/* Keyboard users get a ring that is visible on both the white card and the
+   solid green/blue buttons. */
+:focus-visible {
+  outline: 2px solid #0b57d0;
+  outline-offset: 2px;
+}
+
+input[type="submit"]:focus-visible,
+.copy-button:focus-visible {
+  outline-color: #0b57d0;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 2px var(--color-on-accent);
+}
+
+/* Announced by screen readers, invisible on screen. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Phones and narrow windows: the heading still fits on one line. */
+@media (max-width: 420px) {
+  :root {
+    --heading-size: 26px;
+    --card-padding: 16px;
+    --page-padding: 16px;
+  }
+
+  /* Two columns of text stop fitting on a 390px phone: stack them. */
+  .saved-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .saved-side {
+    text-align: left;
+  }
+
+  .saved-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .result input[type="text"].fresh,
+  .saved-code.fresh {
+    animation: none;
+  }
+
+  .progress span {
+    transition: none;
+  }
+}
